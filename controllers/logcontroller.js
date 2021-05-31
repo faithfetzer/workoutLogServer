@@ -26,9 +26,9 @@ router.post("/", validateJWT.validateSession, async (req, res) =>{
     LogModel.create(logEntry)
 });
 
-// router.get("/", validateJWT, async (req, res) =>{
-//     res.send('this is a practice route')
-// });
+router.get("/", validateJWT, async (req, res) =>{
+    res.send('this is a practice route')
+});
 
 // router.get("/:id", async (req, res) =>{
 
