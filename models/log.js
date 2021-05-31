@@ -2,10 +2,10 @@ const {DataTypes} = require('sequelize');
 const db = require('../db');
 
 const Log = db.define('log', {
-    desciption: {
+    description: {
         type: DataTypes.STRING,
         allowNull: false,
-    }, defiinition: {
+    }, definition: {
         type: DataTypes.STRING,
         allowNull: false,
     }, result: {
@@ -15,3 +15,5 @@ const Log = db.define('log', {
         type: DataTypes.INTEGER
     }
 })
+
+module.exports = Log;

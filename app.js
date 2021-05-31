@@ -4,7 +4,7 @@ const app = Express();
 const dbConnection = require('./db');
 
 app.use(Express.json());
-
+app.use(require("./middleware/validate-session"))
 const controllers = require('./controllers');
 app.use('/user', controllers.userController);
 app.use('/log', controllers.logController);
