@@ -1,19 +1,24 @@
-
+// require("dotenv").config();
 const Express = require('express');
 const router = Express.Router();
-const { UniqueConstraintError } = require('sequelize');
 const {UserModel} = require('../models');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const bcrypt = require("bcryptjs");
+const User = require('../models/user');
+const { UniqueConstraintError } = require('sequelize');
 
-router.post("/register", async(req, res) => {
+
+router.post('/register', async(req, res) => {
     let {username, password} = req.body.user;
     try{
         const User = await UserModel.create({
             username, 
-            password: bcrypt.hashSync(password, 13),
+            password: bcrypt.hashSync(password, 13)
         })
-        let token = jwt.sign({id: User.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
+        const token = jwt.sign(
+            {id: User.id}, 
+            process.env.JWT_SECRET, 
+            {expiresIn: 60*60*24});
         res.status(201).json({
             message: "User successfully created",
             user: User,

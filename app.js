@@ -1,19 +1,23 @@
-require('dotenv').config();
+require("dotenv").config();
 const Express = require('express');
 const app = Express();
 const dbConnection = require('./db');
 
-app.use(Express.json());
-app.use(require("./middleware/validate-session"))
 const controllers = require('./controllers');
+
+app.use(Express.json());
+
 app.use('/user', controllers.userController);
+
+app.use(require("./middleware/validate-session"));
+
 app.use('/log', controllers.logController);
 
 dbConnection.authenticate()
-    .then(() => dbConnection.sync())
+    .then(() => dbConnection.sync()) // .sync({force: true}) <= drops and resets database tables
     .then(() => {
-        app.listen(3000, ()=>{
-            console.log(`[Server]: App is listening on 3000.`);
+        app.listen(3001, ()=>{
+            console.log(`[Server]: App is listening on 3001.`);
         });
     })
     .catch((err) => {
